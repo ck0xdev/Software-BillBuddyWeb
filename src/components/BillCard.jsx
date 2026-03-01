@@ -1,7 +1,7 @@
 export default function BillCard({ bill, onEdit }) {
   const balance = bill.total_amount - bill.paid_amount
   const isPaid = balance === 0
-  
+
   return (
     <div className="bill-card">
       <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 8 }}>
@@ -26,8 +26,8 @@ export default function BillCard({ bill, onEdit }) {
           )}
         </div>
       </div>
-      <button 
-        className="btn-edit" 
+      <button
+        className="btn-edit"
         onClick={() => onEdit(bill)}
         style={{ marginTop: 10, width: '100%' }}
       >

@@ -57,7 +57,7 @@ export default function AddCustomerModal({ isOpen, onClose, customer, defaultDay
   };
 
   if (!isOpen) return null;
-  const days = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
+  const days = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Mobile', 'Natubhai'];
 
   return (
     <div className="modal-overlay" onClick={onClose}>

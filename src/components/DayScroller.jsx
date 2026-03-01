@@ -1,7 +1,7 @@
 import React from 'react';
 
 export default function DayScroller({ currentDay, onDayChange }) {
-  const days = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
+  const days = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Mobile', 'Natubhai'];
 
   return (
     <div className="day-scroller">

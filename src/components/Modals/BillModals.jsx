@@ -35,7 +35,7 @@ export default function BillModal({ isOpen, onClose, onSuccess, customerId, edit
   const handleSubmit = async (e) => {
     e.preventDefault()
     setLoading(true)
-    
+
     const billData = {
       customer_id: customerId,
       bill_no: formData.bill_no,
@@ -45,7 +45,7 @@ export default function BillModal({ isOpen, onClose, onSuccess, customerId, edit
     }
 
     let error
-    
+
     if (editBill) {
       const { error: updateError } = await supabase
         .from('bills')
@@ -60,7 +60,7 @@ export default function BillModal({ isOpen, onClose, onSuccess, customerId, edit
     }
 
     setLoading(false)
-    
+
     if (error) {
       alert(error.message)
     } else {
@@ -76,49 +76,49 @@ export default function BillModal({ isOpen, onClose, onSuccess, customerId, edit
         <h2>{editBill ? 'Edit Bill' : 'New Bill Entry'}</h2>
         <form onSubmit={handleSubmit}>
           <label>Date:</label>
-          <input 
-            type="date" 
+          <input
+            type="date"
             className="input-field"
             value={formData.date}
-            onChange={(e) => setFormData({...formData, date: e.target.value})}
+            onChange={(e) => setFormData({ ...formData, date: e.target.value })}
             required
           />
-          
+
           <label>Bill Number:</label>
-          <input 
-            type="text" 
+          <input
+            type="text"
             className="input-field"
             placeholder="e.g. #101"
             value={formData.bill_no}
-            onChange={(e) => setFormData({...formData, bill_no: e.target.value})}
+            onChange={(e) => setFormData({ ...formData, bill_no: e.target.value })}
             required
           />
-          
+
           <label>Bill Amount (Total):</label>
-          <input 
-            type="number" 
+          <input
+            type="number"
             className="input-field"
             placeholder="0"
             value={formData.total_amount}
-            onChange={(e) => setFormData({...formData, total_amount: e.target.value})}
+            onChange={(e) => setFormData({ ...formData, total_amount: e.target.value })}
             required
           />
-          
+
           <label>Amount Paid (Received):</label>
-          <input 
-            type="number" 
+          <input
+            type="number"
             className="input-field"
             placeholder="0"
             value={formData.paid_amount}
-            onChange={(e) => setFormData({...formData, paid_amount: e.target.value})}
+            onChange={(e) => setFormData({ ...formData, paid_amount: e.target.value })}
           />
-          
+
           <div style={{ background: '#f8f9fa', padding: 10, borderRadius: 6, margin: '10px 0' }}>
             <strong>Balance: <span style={{ color: balance > 0 ? '#dc3545' : '#28a745' }}>
               ₹{balance.toLocaleString()}
             </span></strong>
           </div>
-          
+
           <button type="submit" className="btn-save" disabled={loading}>
             {loading ? 'Saving...' : 'Save Transaction'}
           </button>

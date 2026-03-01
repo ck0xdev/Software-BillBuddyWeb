@@ -37,7 +37,7 @@ export default function Details() {
   }
 
   const totalPending = bills.reduce((sum, b) => sum + (parseFloat(b.total_amount) - parseFloat(b.paid_amount)), 0)
-  
+
   const handleEdit = (bill) => {
     setEditingBill(bill)
     setShowModal(true)
@@ -61,7 +61,7 @@ export default function Details() {
         <td style="border:1px solid #ddd;padding:8px;text-align:right">₹${bal.toLocaleString()}</td>
       </tr>`
     }).join('')
-    
+
     printWindow.document.write(`
       <html>
       <head><title>Statement - ${customer?.name}</title></head>
@@ -96,11 +96,11 @@ export default function Details() {
   return (
     <div>
       <Header title={customer.name} />
-      
+
       <div className="details-header" style={{ marginTop: -60, paddingTop: 80 }}>
         <div className="meta-info" style={{ marginTop: 10 }}>
-          <span>Sr: {customer.sr_no}</span> | 
-          <span><a href={`tel:${customer.mobile}`} style={{color:'white'}}>📞 Call</a></span> | 
+          <span>Sr: {customer.sr_no}</span> |
+          <span><a href={`tel:${customer.mobile}`} style={{ color: 'white' }}>📞 Call</a></span> |
           <span style={{ background: 'rgba(255,255,255,0.2)', padding: '2px 8px', borderRadius: 4 }}>
             {customer.route_day}
           </span>
@@ -142,7 +142,7 @@ export default function Details() {
         )}
       </div>
 
-      <BillModal 
+      <BillModal
         isOpen={showModal}
         onClose={handleCloseModal}
         onSuccess={fetchBills}
