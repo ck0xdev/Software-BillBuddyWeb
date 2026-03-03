@@ -5,6 +5,7 @@ export default function BillModal({ isOpen, onClose, onSuccess, customerId, edit
   const [formData, setFormData] = useState({
     bill_no: '',
     date: new Date().toISOString().split('T')[0],
+    paid_date: new Date().toISOString().split('T')[0],
     total_amount: '',
     paid_amount: 0
   })
@@ -15,6 +16,7 @@ export default function BillModal({ isOpen, onClose, onSuccess, customerId, edit
       setFormData({
         bill_no: editBill.bill_no,
         date: editBill.date,
+        paid_date: editBill.paid_date || editBill.date || new Date().toISOString().split('T')[0],
         total_amount: editBill.total_amount,
         paid_amount: editBill.paid_amount
       })
@@ -22,6 +24,7 @@ export default function BillModal({ isOpen, onClose, onSuccess, customerId, edit
       setFormData({
         bill_no: '',
         date: new Date().toISOString().split('T')[0],
+        paid_date: new Date().toISOString().split('T')[0],
         total_amount: '',
         paid_amount: 0
       })
@@ -36,12 +39,15 @@ export default function BillModal({ isOpen, onClose, onSuccess, customerId, edit
     e.preventDefault()
     setLoading(true)
 
+    const paidAmt = parseFloat(formData.paid_amount) || 0
+
     const billData = {
       customer_id: customerId,
       bill_no: formData.bill_no,
       date: formData.date,
+      paid_date: paidAmt > 0 ? formData.paid_date : null,
       total_amount: parseFloat(formData.total_amount) || 0,
-      paid_amount: parseFloat(formData.paid_amount) || 0
+      paid_amount: paidAmt
     }
 
     let error
@@ -112,6 +118,19 @@ export default function BillModal({ isOpen, onClose, onSuccess, customerId, edit
             value={formData.paid_amount}
             onChange={(e) => setFormData({ ...formData, paid_amount: e.target.value })}
           />
+
+          {parseFloat(formData.paid_amount || 0) > 0 && (
+            <>
+              <label style={{ color: '#28a745' }}>Payment Date:</label>
+              <input
+                type="date"
+                className="input-field"
+                value={formData.paid_date}
+                onChange={(e) => setFormData({ ...formData, paid_date: e.target.value })}
+                required
+              />
+            </>
+          )}
 
           <div style={{ background: '#f8f9fa', padding: 10, borderRadius: 6, margin: '10px 0' }}>
             <strong>Balance: <span style={{ color: balance > 0 ? '#dc3545' : '#28a745' }}>

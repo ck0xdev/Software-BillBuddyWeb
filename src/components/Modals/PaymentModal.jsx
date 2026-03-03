@@ -5,6 +5,7 @@ export default function PaymentModal({ isOpen, onClose, customer, pending, bill,
   const [paid, setPaid] = useState('');
   const [billNo, setBillNo] = useState('');
   const [date, setDate] = useState('');
+  const [paidDate, setPaidDate] = useState('');
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
@@ -14,11 +15,13 @@ export default function PaymentModal({ isOpen, onClose, customer, pending, bill,
         setPaid(bill.paid_amount?.toString() || '');
         setBillNo(bill.bill_no?.toString() || '');
         setDate(bill.date || new Date().toISOString().split('T')[0]);
+        setPaidDate(bill.paid_date || bill.date || new Date().toISOString().split('T')[0]);
       } else {
         setTotal('');
         setPaid('');
         setBillNo('');
         setDate(new Date().toISOString().split('T')[0]);
+        setPaidDate(new Date().toISOString().split('T')[0]);
       }
     }
   }, [isOpen, bill]);
@@ -40,6 +43,7 @@ export default function PaymentModal({ isOpen, onClose, customer, pending, bill,
         await api.updateBill(bill.id, {
           bill_no: billNo,
           date: date,
+          paid_date: p > 0 ? paidDate : null,
           total_amount: t,
           paid_amount: p
         }, oldTotal, oldPaid, customer.id);
@@ -49,6 +53,7 @@ export default function PaymentModal({ isOpen, onClose, customer, pending, bill,
           customer_name: customer.name,
           bill_no: billNo,
           date: date,
+          paid_date: p > 0 ? paidDate : null,
           total_amount: t,
           paid_amount: p
         });
@@ -117,6 +122,15 @@ export default function PaymentModal({ isOpen, onClose, customer, pending, bill,
               <input type="number" className="field-input" value={paid} onChange={e => setPaid(e.target.value)} placeholder="0" />
             </div>
           </div>
+
+          {parseFloat(paid || 0) > 0 && (
+            <div className="flex gap-12 mt-12">
+              <div className="field" style={{ flex: 1 }}>
+                <label className="field-label" style={{ color: 'var(--success)' }}>Payment Date</label>
+                <input type="date" className="field-input" value={paidDate} onChange={e => setPaidDate(e.target.value)} required />
+              </div>
+            </div>
+          )}
 
           <div className="balance-box mt-8">
             <div className="balance-label">Current Bill Balance</div>

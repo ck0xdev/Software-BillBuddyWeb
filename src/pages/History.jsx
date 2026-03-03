@@ -6,9 +6,9 @@ export default function History() {
     const [selectedDate, setSelectedDate] = useState(new Date().toISOString().split('T')[0]);
     const { data: bills, loading } = useCollectionSync('bills', null);
 
-    // Filter bills for the chosen date that have some payment recorded
+    // Filter bills for the chosen date that were billed today OR paid today
     const dailyBills = bills
-        .filter(b => b.date === selectedDate)
+        .filter(b => b.date === selectedDate || b.paid_date === selectedDate)
         .sort((a, b) => new Date(b.created_at) - new Date(a.created_at)); // newest first
 
     const totalCollected = dailyBills.reduce((sum, b) => sum + (parseFloat(b.paid_amount) || 0), 0);
